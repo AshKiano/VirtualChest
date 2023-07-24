@@ -1,0 +1,10 @@
+name: VirtualChest
+version: '1.2'
+main: com.ashkiano.virtualchest.VirtualChest
+api-version: "1.16"
+authors: [AshKiano]
+description: Creates virtualchest saved in database for each player
+website: https://www.ashkiano.com
+commands:
+  transfer:
+    description: Opens virtual inventory.

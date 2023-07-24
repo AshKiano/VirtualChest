@@ -1,0 +1,25 @@
+# IP address of the database (without port number)
+host: db_ip_without_port
+
+# Name of the database
+database: database_name
+
+# Database username
+username: username
+
+# Database password
+password: password
+
+# Port number for the database connection, default for MySQL is 3306
+port: 3306
+
+# If players are allowed to upload (store) items to the virtual chest
+upload: true
+
+# If players are allowed to download (retrieve) items from the virtual chest
+download: true
+
+# List of items that players cannot store in the virtual chest
+blockedItems:
+  - DRAGON_EGG
+  - ELYTRA
