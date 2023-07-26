@@ -62,6 +62,8 @@ public class VirtualChest extends JavaPlugin implements Listener {
 
         setupDatabase();
 
+        System.out.println("Thank you for using the VirtualChest plugin! If you enjoy using this plugin, please consider making a donation to support the development. You can donate at: https://paypal.me/josefvyskocil");
+
         Metrics metrics = new Metrics(this, 19170);
     }
 
