@@ -26,6 +26,10 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
+//TODO 1. Add option to see other people's "chests" and modify them (admin only permission)
+//TODO 2. Option to rename the title of the "chest"
+//TODO 3. Option to make multiple pages of this chest
+//TODO 4. Option to make the items save exactly how they are placed in the "chest"
 //TODO dodělat chybové hlášky do configu
 //TODO název tabulky taky přidat do configu
 //TODO opravit bug při přesouvání z horního do spodního inventu
@@ -62,7 +66,7 @@ public class VirtualChest extends JavaPlugin implements Listener {
 
         setupDatabase();
 
-        System.out.println("Thank you for using the VirtualChest plugin! If you enjoy using this plugin, please consider making a donation to support the development. You can donate at: https://paypal.me/josefvyskocil");
+        this.getLogger().info("Thank you for using the VirtualChest plugin! If you enjoy using this plugin, please consider making a donation to support the development. You can donate at: https://paypal.me/josefvyskocil");
 
         Metrics metrics = new Metrics(this, 19170);
     }
