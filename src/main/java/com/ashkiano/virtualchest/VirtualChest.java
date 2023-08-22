@@ -18,11 +18,12 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
+import org.json.JSONObject;
 
 import javax.annotation.Nonnull;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.*;
 import java.util.*;
 
@@ -69,6 +70,8 @@ public class VirtualChest extends JavaPlugin implements Listener {
         this.getLogger().info("Thank you for using the VirtualChest plugin! If you enjoy using this plugin, please consider making a donation to support the development. You can donate at: https://paypal.me/josefvyskocil");
 
         Metrics metrics = new Metrics(this, 19170);
+
+        checkForUpdates();
     }
 
     private void setupDatabase() {
@@ -276,6 +279,46 @@ public class VirtualChest extends JavaPlugin implements Listener {
         try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
              BukkitObjectInputStream ois = new BukkitObjectInputStream(bis)) {
             return (ItemStack) ois.readObject();
+        }
+    }
+
+    private void checkForUpdates() {
+        try {
+            String pluginName = this.getDescription().getName();
+            URL url = new URL("https://www.ashkiano.com/version_check.php?plugin=" + pluginName);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+
+            int responseCode = con.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                String jsonResponse = response.toString();
+                JSONObject jsonObject = new JSONObject(jsonResponse);
+                if (jsonObject.has("error")) {
+                    this.getLogger().warning("Error when checking for updates: " + jsonObject.getString("error"));
+                } else {
+                    String latestVersion = jsonObject.getString("latest_version");
+
+                    String currentVersion = this.getDescription().getVersion();
+                    if (currentVersion.equals(latestVersion)) {
+                        this.getLogger().info("This plugin is up to date!");
+                    } else {
+                        this.getLogger().warning("There is a newer version (" + latestVersion + ") available! Please update!");
+                    }
+                }
+            } else {
+                this.getLogger().warning("Failed to check for updates. Response code: " + responseCode);
+            }
+        } catch (Exception e) {
+            this.getLogger().warning("Failed to check for updates. Error: " + e.getMessage());
         }
     }
 }
