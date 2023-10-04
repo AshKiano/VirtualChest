@@ -47,6 +47,7 @@ public class VirtualChest extends JavaPlugin implements Listener {
     private boolean download;
     // Blocked items
     private final List<Material> blockedItems = new ArrayList<>();
+    private String commandPermission;
 
     @Override
     public void onEnable() {
@@ -61,6 +62,7 @@ public class VirtualChest extends JavaPlugin implements Listener {
         port = this.getConfig().getInt("port");
         upload = this.getConfig().getBoolean("upload");
         download = this.getConfig().getBoolean("download");
+        commandPermission = this.getConfig().getString("commandPermission", "virtualchest.use");
         List<String> blockedItemsConfig = this.getConfig().getStringList("blockedItems");
         for (String item : blockedItemsConfig)
             blockedItems.add(Material.valueOf(item));
@@ -189,7 +191,13 @@ public class VirtualChest extends JavaPlugin implements Listener {
                 sender.sendMessage(ChatColor.RED + "This command can only be used by the player!");
                 return true;
             }
+
             Player player = (Player) sender;
+
+            if (!player.hasPermission(commandPermission)) {
+                player.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
+                return true;
+            }
             Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLUE + "Transfer");
 
             // Check if the database connection is active

@@ -19,6 +19,9 @@ upload: true
 # If players are allowed to download (retrieve) items from the virtual chest
 download: true
 
+# config.yml
+commandPermission: "virtualchest.use"
+
 # List of items that players cannot store in the virtual chest
 blockedItems:
   - DRAGON_EGG
