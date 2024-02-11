@@ -1,5 +1,7 @@
+com\ashkiano\virtualchest\VirtualChest.class
 com\ashkiano\virtualchest\Metrics$AdvancedBarChart.class
 com\ashkiano\virtualchest\Metrics.class
+com\ashkiano\virtualchest\VirtualChest$1.class
 com\ashkiano\virtualchest\Metrics$CustomChart.class
 com\ashkiano\virtualchest\Metrics$SimplePie.class
 com\ashkiano\virtualchest\Metrics$JsonObjectBuilder.class
